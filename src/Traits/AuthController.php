@@ -64,16 +64,7 @@ trait AuthController
 
             event(new ShopAuthenticatedEvent($result['shop_id']));
             
-            return View::make(
-                'shopify-app::auth.fullpage_redirect',
-                [
-                    'apiKey' => Util::getShopifyConfig('api_key', $shopOrigin),
-                    'appBridgeVersion' => Util::getShopifyConfig('appbridge_version') ? '@'.config('shopify-app.appbridge_version') : '',
-                    'url' => $result['url'],
-                    'host' => $request->get('host'),
-                    'shopDomain' => $shopDomain,
-                ]
-            );
+            return Redirect($result['url']);
         } else {
             // Go to home route
             return Redirect::route(
